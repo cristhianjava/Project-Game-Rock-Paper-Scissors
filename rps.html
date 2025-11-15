@@ -7,52 +7,79 @@
 </head>
 <body>
     <script>
-        //Global scores
-        let humanScore = 0;
-        let computerScore = 0;
-
+    
         function getComputerchoice(){
         const choices = ["rock", "paper", "scissors"];
          const randomIndex = Math.floor(Math.random() * choices.length);
          return choices[randomIndex];
 
         }
-       let computerChoice = getComputerchoice()
-       console.log(computerChoice)
-
-       function getHumanChoice(){
+    
+        function getHumanChoice(){
         const choice = prompt("Choose: Rock, Paper, or Scissors");
         return choice.trim().toLowerCase();
 
        }
 
-       const humanChoice = getHumanChoice()
-       console.log(humanChoice)
-
-       function playRound(computerChoice, humanChoice){
+       function playRound(humanChoice, computerChoice){
         humanChoice = humanChoice.toLowerCase();
         computerChoice = computerChoice.toLowerCase();
 
-        if(humanChoice === computerChoice ){
-         console.log("It's a tie ! Both chose " + humanChoice);
+        if(
+        (humanChoice === "rock" && computerChoice === "paper") ||  (humanChoice === "paper" && computerChoice === "scissors") ||
+        (humanChoice === "scissors" && computerChoice === "rock")){
+         return "lose";
         }
-        else if((humanChoice === "rock" && computerChoice === "scissors") ||  (humanChoice === "paper" && computerChoice === "rock") ||
+        else if(
+        (humanChoice === "rock" && computerChoice === "scissors") ||
+        (humanChoice === "paper" && computerChoice === "rock") ||
         (humanChoice === "scissors" && computerChoice === "paper"))
         {
-         humanScore++
-         console.log(`Human: ${humanScore} | Computer: ${computerScore}`);
+         return "win"
         } 
-        else((humanChoice === "rock" && computerChoice === "paper") ||  (humanChoice === "paper" && computerChoice === "scissors") ||
-        (humanChoice === "scissors" && computerChoice === "rock"))
-        {
-         computerScore++
-         console.log(`Human: ${humanScore} | Computer: ${computerScore}`);
-        } 
+        else{ 
+         return "tie";
+         }
+       
        }
 
-       console.log(playRound(computerChoice, humanChoice))
+      function playGame(){
+        
+        let humanScore = 0;
+        let computerScore = 0;
 
+        for (let i = 0; i < 5; i++){
+         const humanChoice = getHumanChoice();
+         const computerChoice = getComputerchoice();
 
+         const result = playRound(humanChoice, computerChoice)
+
+         if(result === "win"){
+            alert("YOU WIN")
+            humanScore++;
+         }else if (result === "lose"){
+            alert("you lose")
+            computerScore++;
+         }else {
+            alert(`It's a tie! Both chose ${humanChoice}`);
+         }
+
+          alert(`Round ${i+1}: Human ${humanScore} - Computer ${computerScore}`);
+          
+         }
+        if (humanScore > computerScore) {
+        alert("You won the game!");
+        } else if (computerScore > humanScore) {
+        alert("Computer wins the game!");
+        } else {
+        alert("The game is a tie!");
+            }
+        }
+
+       
+
+        console.log(playGame())
+      
     </script>
 </body>
 </html>
